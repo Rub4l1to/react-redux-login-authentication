@@ -1,4 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+
+//* Redux
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+//* Getters
+import { selectAuth } from 'redux/slices/auth/authGetters';
+//* Reducers
+import { handleAuthenticated } from 'redux/slices/auth/authSlice';
 
 //* Services
 import { getAccessToken } from 'services/localStorage';
@@ -8,12 +15,13 @@ interface Response {
 }
 
 export const useAuth = (): Response => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const { isAuthenticated } = useAppSelector(selectAuth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const token = getAccessToken() ? true : false;
-    setIsAuthenticated(token);
-  }, []);
+    dispatch(handleAuthenticated(token));
+  }, [getAccessToken()]);
 
   return {
     isAuthenticated,

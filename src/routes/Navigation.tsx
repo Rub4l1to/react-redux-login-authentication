@@ -13,14 +13,13 @@ export const Navigation = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public routes */}
-        <Route path="/login" element={<LoginPage />} />
-
         {/* Private routes */}
         <Route path="/" element={<PrivateOutlet />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
         </Route>
+        {/* Public routes */}
+        <Route path="/login" element={<LoginPage />} />
 
         <Route path="/*" element={<Navigate to="/login" replace />} />
       </Routes>
